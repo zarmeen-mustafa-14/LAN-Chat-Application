@@ -1,6 +1,7 @@
 #include "../Message.h"
 #include "../Serializer.h"
 #include "../Parser.h"
+#include "../MessageValidator.h"
 #include <iostream>
 #include <ctime>
 
@@ -37,5 +38,25 @@ int main()
 
     Message parsedBackslash = Parser::parse(wireFormat3);
     std::cout << "[PARSED BACKSLASH] content: " << parsedBackslash.getContent() << std::endl;
+
+    Message validMsg(Protocol::MessageType::CHAT, "Bob", "hello", now);
+    std::cout << "[VALID CHECK] valid message: " << MessageValidator::isValid(validMsg) << std::endl;
+
+    Message emptyPrivate(Protocol::MessageType::PRIVATE, "Bob", "secret", now); // no recipient given, defaults to ""
+    std::cout << "[VALID CHECK] private w/o recipient: " << MessageValidator::isValid(emptyPrivate) << std::endl;
+    std::cout << "[REASON] " << MessageValidator::getRejectionReason(emptyPrivate) << std::endl;
+
+    Message noSender(Protocol::MessageType::CHAT, "", "hello", now);
+    std::cout << "[VALID CHECK] empty sender: " << MessageValidator::isValid(noSender) << std::endl;
+    std::cout << "[REASON] " << MessageValidator::getRejectionReason(noSender) << std::endl;
+
+    std::string longContent(Protocol::MAX_MESSAGE_LENGTH + 50, 'x'); // 50 characters over the limit
+    Message tooLong(Protocol::MessageType::CHAT, "Bob", longContent, now);
+    std::cout << "[VALID CHECK] too long message: " << MessageValidator::isValid(tooLong) << std::endl;
+    std::cout << "[REASON] " << MessageValidator::getRejectionReason(tooLong) << std::endl;
+
+    std::string exactContent(Protocol::MAX_MESSAGE_LENGTH, 'x'); // exactly at the limit
+    Message exactSize(Protocol::MessageType::CHAT, "Bob", exactContent, now);
+    std::cout << "[VALID CHECK] exactly at limit: " << MessageValidator::isValid(exactSize) << std::endl;
     return 0;
 }
