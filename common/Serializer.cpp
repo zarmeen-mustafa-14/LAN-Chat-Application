@@ -17,23 +17,41 @@ std::string Serializer::typeToString(Protocol::MessageType type){
     }
     return "UNKNOWN";
 }
-
+std::string Serializer::escapeField(const std::string& field){
+    std::string result;
+    for(char c : field){
+        if (c == '\\')
+        {
+            result += "\\\\";
+        }
+        else if (c == Protocol::FIELD_SEPARATOR)
+        {
+            result += '\\';
+            result += Protocol::FIELD_SEPARATOR;
+        }
+        else
+        {
+            result += c;
+        }
+    }
+    return result;
+}
 std::string Serializer::serialize(const Message &message){
     std::string result;
 
     result += typeToString(message.getType());
     result += Protocol::FIELD_SEPARATOR;
 
-    result += message.getSenderName();
+    result += escapeField(message.getSenderName());
     result += Protocol::FIELD_SEPARATOR;
 
-    result += message.getContent();
+    result += escapeField(message.getContent());
     result += Protocol::FIELD_SEPARATOR;
 
     result += std::to_string(message.getTimestamp());
     result += Protocol::FIELD_SEPARATOR;
 
-    result += message.getRecipientName();
+    result += escapeField(message.getRecipientName());
 
     return result;
 }
