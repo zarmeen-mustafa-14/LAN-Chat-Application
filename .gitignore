@@ -1,0 +1,24 @@
+# Build directory
+build/
+
+# Visual Studio
+.vs/
+
+# Visual Studio Code
+.vscode/
+
+# CMake
+CMakeUserPresets.json
+CMakeCache.txt
+CMakeFiles/
+
+# Compiler outputs
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.lib
+*.dll
+
+# Logs
+*.log
