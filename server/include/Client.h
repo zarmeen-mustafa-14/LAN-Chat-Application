@@ -8,12 +8,12 @@ private:
     Socket m_socket;
     std::string m_ip;
     unsigned short m_port;
-    unsigned int m_sessionId;
+    unsigned int m_userId;
     std::string m_username;
 
 public:
     // Constructor and Destructor
-    Client(Socket&& socket, const std::string& ip, unsigned short port, unsigned int sessionId, const std::string& username);
+    Client(Socket&& socket, const std::string& ip, unsigned short port, unsigned int userId, const std::string& username);
     ~Client() = default;
 
     //copy constructor and assignment operator are deleted to prevent copying
@@ -26,7 +26,7 @@ public:
     // Getters
     const std::string& getIp() const;
     unsigned short getPort() const;
-    unsigned int getSessionId() const;
+    unsigned int getUserId() const;
     const std::string& getUsername() const;
 
     //non-const getter used to modify the socket if needed by ClientManager
