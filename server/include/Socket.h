@@ -10,6 +10,7 @@ public:
     // Constructor and Destructor
     Socket();
     ~Socket();
+    Socket(SOCKET sock); // Constructor that takes a SOCKET (for client sockets)
 
     // Delete copy constructor and assignment operator to prevent copying
     Socket(const Socket&) = delete;
