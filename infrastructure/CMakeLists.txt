@@ -2,7 +2,7 @@ add_library(Infrastructure STATIC)
 
 target_sources(Infrastructure
     PRIVATE
-        src/dummy.cpp
+        src/ConsoleLogSinkcpp
 )
 
 target_include_directories(Infrastructure
