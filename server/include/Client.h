@@ -1,11 +1,9 @@
 #pragma once
 #include <string>
-#include "Socket.h"
 
 class Client
 {
 private:
-    Socket m_socket;
     std::string m_ip;
     unsigned short m_port;
     unsigned int m_userId;
@@ -13,7 +11,7 @@ private:
 
 public:
     // Constructor and Destructor
-    Client(Socket&& socket, const std::string& ip, unsigned short port, unsigned int userId, const std::string& username);
+    Client(const std::string& ip, unsigned short port, unsigned int userId, const std::string& username);
     ~Client() = default;
 
     //copy constructor and assignment operator are deleted to prevent copying
@@ -28,9 +26,4 @@ public:
     unsigned short getPort() const;
     unsigned int getUserId() const;
     const std::string& getUsername() const;
-
-    //non-const getter used to modify the socket if needed by ClientManager
-    Socket& getSocket();
-    const Socket& getSocket() const;
-
 };

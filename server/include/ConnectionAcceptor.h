@@ -1,12 +1,17 @@
 #pragma once
 
 #include <winsock2.h>
-// commented out because the client class is not yet implemented
-// #include "Client.h"
-
+#include "Client.h"
+#include "Listener.h"
 class ConnectionAcceptor
 {
+private:
+    Listener &m_listener; // Reference to the Listener object that manages the listening socket
 public:
-    // Accepts a connection on the given listening socket and returns a Client object representing the accepted connection
-    // Client acceptConnection(SOCKET listeningSocket);
-};
+    // Constructor and Destructor
+    ConnectionAcceptor(Listener &listener);
+    ~ConnectionAcceptor();
+
+    // Accept a new client connection
+    Socket acceptConnection();
+};  

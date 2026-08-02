@@ -7,7 +7,7 @@
 class Listener
 {
 private:
-    Socket listenSocket;
+    Socket m_listenSocket;
 public:
     // Constructor and Destructor
     Listener();

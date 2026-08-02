@@ -6,6 +6,7 @@
 #include <thread>
 
 #include "Client.h"
+// #include "ClientSession.h"
 
 class ClientManager
 {
@@ -13,24 +14,35 @@ class ClientManager
         std::unordered_map<unsigned int, Client> m_clients; // Map of userId to Client
         std::unordered_map<unsigned int, std::thread> m_threads; // Map of userId to thread handling the client
         std::mutex m_mutex; // Mutex for thread-safe access to m_clients and m_threads
+        // std::unordered_map<unsigned int, ClientSession> m_sessions; // Map of userId to ClientSession for managing client sessions
 
     public:
         ClientManager() = default;
         ~ClientManager();
 
-        // Add a new client to the manager
-        void addClient(Client&& client);
+        // Client management
+        
+        void addClient(Client&& client); // Add a new client to the manager
+        void removeClient(unsigned int userId); // Remove a client by user ID
 
-        // Remove a client by user ID
-        void removeClient(unsigned int userId);
-
-        // Getter
-        const Client* getClient(unsigned int userId) const; // Get a client by user ID
-        std::vector<const Client*> getAllClients() const; // Get all clients
-
-        Client* getClient(unsigned int userId); // Get a client by user ID for modification
+        std::vector<const Client*> getAllClients() const; // Get all clients 
         std::vector<Client*> getAllClients(); // Used for modifying the list of clients in a thread-safe manner
 
+        Client* getClientByUsername(const std::string& username);  // Check if a client exists by username
+        Client* getClientById(unsigned int userId); // Check if a client exists by user ID
+
+        const Client* getClientByUsername(const std::string& username) const;  // Check if a client exists by username
+        const Client* getClientById(unsigned int userId) const; // Check if a client exists by user ID
+
+        // Thread management
         void addThread(unsigned int userId, std::thread&& thread); // Add a thread for a client
         void removeThread(unsigned int userId); // Remove a thread for a client
+
+        // Session management
+
+        // void addSession(unsigned int userId, ClientSession&& session); // Add a session for a client
+        // void removeSession(unsigned int userId); // Remove a session for a client
+        // ClientSession* getSession(unsigned int userId); // Get a session for a client
+        // const ClientSession* getSession(unsigned int userId) const;
+
 };
