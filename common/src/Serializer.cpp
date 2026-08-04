@@ -1,25 +1,30 @@
 #include "Serializer.h"
-std::string Serializer::typeToString(Protocol::MessageType type){
+std::string Serializer::typeToString(Protocol::MessageType type)
+{
     switch (type)
     {
+    case Protocol::MessageType::SIGNUP:
+        return "SIGNUP";
+    case Protocol::MessageType::LOGIN:
+        return "LOGIN";
+    case Protocol::MessageType::AUTH_SUCCESS:
+        return "AUTH_SUCCESS";
+    case Protocol::MessageType::AUTH_FAIL:
+        return "AUTH_FAIL";
     case Protocol::MessageType::CHAT:
         return "CHAT";
-        break;
-    case Protocol::MessageType::JOIN:
-        return "JOIN";
-        break;
     case Protocol::MessageType::LEAVE:
         return "LEAVE";
-        break;
     case Protocol::MessageType::PRIVATE:
         return "PRIVATE";
-        break;
     }
     return "UNKNOWN";
 }
-std::string Serializer::escapeField(const std::string& field){
+std::string Serializer::escapeField(const std::string &field)
+{
     std::string result;
-    for(char c : field){
+    for (char c : field)
+    {
         if (c == '\\')
         {
             result += "\\\\";
@@ -36,7 +41,8 @@ std::string Serializer::escapeField(const std::string& field){
     }
     return result;
 }
-std::string Serializer::serialize(const Message &message){
+std::string Serializer::serialize(const Message &message)
+{
     std::string result;
 
     result += typeToString(message.getType());
@@ -52,6 +58,9 @@ std::string Serializer::serialize(const Message &message){
     result += Protocol::FIELD_SEPARATOR;
 
     result += escapeField(message.getRecipientName());
+    result += Protocol::FIELD_SEPARATOR;
+
+    result += escapeField(message.getPassword());
 
     return result;
 }
