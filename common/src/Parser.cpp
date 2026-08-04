@@ -9,12 +9,12 @@ std::vector<std::string> Parser::splitFields(const std::string &raw, char separa
     {
         if (escaping)
         {
-            current += c;  // Taking the character literally
+            current += c; // Taking the character literally
             escaping = false;
         }
         else if (c == '\\')
         {
-            escaping = true;  // Now the next character has to be treated literally even if it is a separator
+            escaping = true; // Now the next character has to be treated literally even if it is a separator
         }
         else if (c == separator)
         {
@@ -31,36 +31,36 @@ std::vector<std::string> Parser::splitFields(const std::string &raw, char separa
 }
 Protocol::MessageType Parser::stringToType(const std::string &typeStr)
 {
+    if (typeStr == "SIGNUP")
+        return Protocol::MessageType::SIGNUP;
+    if (typeStr == "LOGIN")
+        return Protocol::MessageType::LOGIN;
+    if (typeStr == "AUTH_SUCCESS")
+        return Protocol::MessageType::AUTH_SUCCESS;
+    if (typeStr == "AUTH_FAIL")
+        return Protocol::MessageType::AUTH_FAIL;
     if (typeStr == "CHAT")
-    {
         return Protocol::MessageType::CHAT;
-    }
     if (typeStr == "LEAVE")
-    {
         return Protocol::MessageType::LEAVE;
-    }
-    if (typeStr == "JOIN")
-    {
-        return Protocol::MessageType::JOIN;
-    }
     if (typeStr == "PRIVATE")
-    {
         return Protocol::MessageType::PRIVATE;
-    }
+
     throw std::invalid_argument("Unknown message type: " + typeStr);
 }
 Message Parser::parse(const std::string &raw)
 {
     std::vector<std::string> fields = splitFields(raw, Protocol::FIELD_SEPARATOR);
-    if (fields.size() != 5)
+    if (fields.size() != 6)
     {
-        throw std::invalid_argument("Malformed message: expected 5 fields, got " + std::to_string(fields.size()));
+        throw std::invalid_argument("Malformed message: expected 6 fields, got " + std::to_string(fields.size()));
     }
     Protocol::MessageType type = stringToType(fields[0]);
     std::string senderName = fields[1];
     std::string content = fields[2];
     time_t timestamp = static_cast<time_t>(std::stoll(fields[3]));
     std::string recipientName = fields[4];
+    std::string password = fields[5];
 
-    return Message(type, senderName, content, timestamp, recipientName);
+    return Message(type, senderName, content, timestamp, recipientName, password);
 }
