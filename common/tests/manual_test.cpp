@@ -1,7 +1,7 @@
-#include "../Message.h"
-#include "../Serializer.h"
-#include "../Parser.h"
-#include "../MessageValidator.h"
+#include "Message.h"
+#include "Serializer.h"
+#include "Parser.h"
+#include "MessageValidator.h"
 #include <iostream>
 #include <ctime>
 
@@ -58,5 +58,23 @@ int main()
     std::string exactContent(Protocol::MAX_MESSAGE_LENGTH, 'x'); // exactly at the limit
     Message exactSize(Protocol::MessageType::CHAT, "Bob", exactContent, now);
     std::cout << "[VALID CHECK] exactly at limit: " << MessageValidator::isValid(exactSize) << std::endl;
+
+    // Test SIGNUP message with password
+    Message signupMsg(Protocol::MessageType::SIGNUP, "Bob", "", now, "", "mySecretPass123");
+    std::string wireFormatSignup = Serializer::serialize(signupMsg);
+    std::cout << "[SERIALIZED SIGNUP] " << wireFormatSignup << std::endl;
+
+    Message parsedSignup = Parser::parse(wireFormatSignup);
+    std::cout << "[PARSED SIGNUP] username: " << parsedSignup.getSenderName()
+              << ", password: " << parsedSignup.getPassword()
+              << ", type: " << (parsedSignup.getType() == Protocol::MessageType::SIGNUP ? "SIGNUP" : "WRONG")
+              << std::endl;
+
+    // Validation checks for password rule
+    std::cout << "[VALID CHECK] signup with password: " << MessageValidator::isValid(signupMsg) << std::endl;
+
+    Message signupNoPassword(Protocol::MessageType::SIGNUP, "Alice", "", now, "", "");
+    std::cout << "[VALID CHECK] signup without password: " << MessageValidator::isValid(signupNoPassword) << std::endl;
+    std::cout << "[REASON] " << MessageValidator::getRejectionReason(signupNoPassword) << std::endl;
     return 0;
 }
