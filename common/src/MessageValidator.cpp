@@ -15,9 +15,18 @@ bool MessageValidator::isRecipientValid(const Message &message)
     }
     return true;
 }
+bool MessageValidator::isPasswordValid(const Message &message)
+{
+    if (message.getType() == Protocol::MessageType::SIGNUP ||
+        message.getType() == Protocol::MessageType::LOGIN)
+    {
+        return !message.getPassword().empty();
+    }
+    return true;
+}
 bool MessageValidator::isValid(const Message &message)
 {
-    return isContentLengthValid(message) && isSenderNameValid(message) && isRecipientValid(message);
+    return isContentLengthValid(message) && isSenderNameValid(message) && isRecipientValid(message) && isPasswordValid(message);
 }
 std::string MessageValidator::getRejectionReason(const Message &message)
 {
@@ -32,6 +41,10 @@ std::string MessageValidator::getRejectionReason(const Message &message)
     if (!isRecipientValid(message))
     {
         return "Private messages must specify a recipient";
+    }
+    if (!isPasswordValid(message))
+    {
+        return "Passwords should not be empty";
     }
     return "";
 }
