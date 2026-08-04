@@ -1,5 +1,5 @@
 #include "Message.h"
-Message::Message(Protocol::MessageType type, const std::string &senderName, const std::string &content, time_t timestamp, const std::string &recipientName) : type(type), senderName(senderName), content(content), timestamp(timestamp), recipientName(recipientName) {}
+Message::Message(Protocol::MessageType type, const std::string &senderName, const std::string &content, time_t timestamp, const std::string &recipientName, const std::string& password): type(type), senderName(senderName), content(content), timestamp(timestamp), recipientName(recipientName), password(password) {}
 Protocol::MessageType Message::getType() const{
     return type;
 }
@@ -14,4 +14,7 @@ std::string Message::getRecipientName() const{
 }
 time_t Message::getTimestamp() const{
     return timestamp;
+}
+std::string Message::getPassword() const{
+    return password;
 }

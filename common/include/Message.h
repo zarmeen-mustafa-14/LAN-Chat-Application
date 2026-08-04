@@ -11,13 +11,15 @@ private:
     std::string content;
     std::string recipientName;
     time_t timestamp;
+    std::string password;
 
 public:
-    Message(Protocol::MessageType type, const std::string &senderName, const std::string &content,time_t timestamp, const std::string &recipientName ="");
+    Message(Protocol::MessageType type, const std::string &senderName, const std::string &content,time_t timestamp, const std::string &recipientName ="", const std::string& password = "");
     Protocol::MessageType getType() const;
     std::string getSenderName() const;
     std::string getContent() const;
     std::string getRecipientName() const;
     time_t getTimestamp() const;
+    std::string getPassword() const;
 };
 #endif
