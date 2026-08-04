@@ -1,4 +1,7 @@
 #pragma once
+#include <string>
+#include <atomic>
+#include <functional>
 
 #include "server/include/Socket.h"
 #include "common/include/Message.h"
@@ -6,10 +9,11 @@
 class Receiver {
 private:
     Socket& m_socket; 
-    bool m_running; // Flag to indicate if the receiver is running
+    std::atomic<bool> m_running; // Atomic flag to control the receiving loop
+    std::function<void(const Message&)> m_callback; // Callback function to handle received messages
 public:
     // Constructor and Destructor
-    explicit Receiver(Socket& socket);
+    explicit Receiver(Socket& socket, std::function<void(const Message&)> callback);
     ~Receiver() = default;
 
     // Delete copy constructor and assignment operator to prevent copying
