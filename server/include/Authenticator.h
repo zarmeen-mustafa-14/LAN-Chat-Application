@@ -16,7 +16,7 @@ class Authenticator
     private:
         std::vector<User> m_users; // List of users for authentication
 
-        // used by authenticate() for cleaner code
+        // helper functions used by authenticate() for cleaner code
         const User* findUserByUsername(const std::string& username) const;
         const User* findUserById(unsigned int userId) const;
         bool verifyPassword(const User& user, const std::string& password) const;
