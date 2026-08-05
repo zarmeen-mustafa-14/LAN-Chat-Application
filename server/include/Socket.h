@@ -30,4 +30,5 @@ public:
     void close();
 
     bool isValid() const;
+    int getLastError() const;
 };
