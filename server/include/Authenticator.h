@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "Socket.h"
 #include "User.h"
 
@@ -11,8 +13,17 @@ struct AuthenticationResult
 
 class Authenticator
 {
+    private:
+        std::vector<User> m_users; // List of users for authentication
 
+        // used by authenticate() for cleaner code
+        const User* findUserByUsername(const std::string& username) const;
+        const User* findUserById(unsigned int userId) const;
+        bool verifyPassword(const User& user, const std::string& password) const;
     public:
+        // Constructor
+        Authenticator();
+
         // Authenticate a user based on the provided username and password
         static AuthenticationResult authenticate(Socket& socket);
 };

@@ -9,18 +9,20 @@
 #include "common/include/Message.h"
 
 enum class ConnectionState {
-    DISCONNECTING,
     DISCONNECTED,
     CONNECTING,
-    CONNECTED
+    CONNECTED,
+    DISCONNECTING
 };
 
 class NetworkClient {
     private:
         Socket m_socket; // Socket for network communication
-        Receiver m_receiver; // Receiver object to handle incoming messages
+        
         Sender m_sender; // Sender object to handle outgoing messages
-        std::thread m_receiveThread; // Thread for receiving messages
+        Receiver m_receiver; // Receiver object to handle incoming messages
+
+        std::thread m_receiveThread; // Runs Receiver::receiveLoop()
         ConnectionState m_connectionState; // Variable to track the client's state
 
         void onMessageReceived(const Message& message); // Callback function for handling received messages

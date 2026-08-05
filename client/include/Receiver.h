@@ -16,11 +16,15 @@ public:
     explicit Receiver(Socket& socket, std::function<void(const Message&)> callback);
     ~Receiver() = default;
 
+    // Delete move constructor and move assignment operator to prevent moving
+    Receiver(Receiver&&) = delete;
+    Receiver& operator=(Receiver&&) = delete;
+
     // Delete copy constructor and assignment operator to prevent copying
     Receiver(const Receiver&) = delete;
     Receiver& operator=(const Receiver&) = delete;
 
-    void recieveLoop(); // Method to start the receiving loop
+    void receiveLoop(); // Method to start the receiving loop
     void stop(); // Method to stop the receiver
 
     Message receiveMessage(std::string& message); 
