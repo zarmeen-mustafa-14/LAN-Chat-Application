@@ -3,6 +3,8 @@ add_executable(Server)
 target_sources(Server
     PRIVATE
         src/main.cpp
+        src/Socket.cpp
+        src/WinSockInitializer.cpp
 )
 
 target_include_directories(Server
