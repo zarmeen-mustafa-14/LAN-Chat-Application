@@ -31,6 +31,7 @@ public:
 
     // Used by sender class to prevent direct direct exposure of Sender to Socket class
     bool send(const std::string& data);
+    bool receive(std::string& data);
 
     bool isValid() const;
     int getLastError() const;

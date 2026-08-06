@@ -88,6 +88,26 @@ bool Socket::send(const std::string &data)
     return true;
 }
 
+bool Socket::receive(std::string &data)
+{
+    if (!isValid())
+    {
+        return false;
+    }
+
+    constexpr int BUFFER_SIZE = 1024;
+    char buffer[BUFFER_SIZE];
+    int bytesReceived = ::recv(m_sock, buffer, sizeof(buffer) - 1, 0);
+    if (bytesReceived == SOCKET_ERROR || bytesReceived == 0)
+    {
+        return false; // Receiving failed or connection closed
+    }
+
+    buffer[bytesReceived] = '\0'; // Null-terminate the received data
+    data.assign(buffer, bytesReceived);
+    return true;
+}
+
 bool Socket::isValid() const
 {
     return m_sock != INVALID_SOCKET;

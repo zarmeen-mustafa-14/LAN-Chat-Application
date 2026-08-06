@@ -4,6 +4,7 @@
 
 #include "Socket.h"
 #include "User.h"
+#include "Message.h"
 
 struct AuthenticationResult
 {
@@ -25,5 +26,5 @@ class Authenticator
         Authenticator();
 
         // Authenticate a user based on the provided username and password
-        AuthenticationResult authenticate(Socket& socket);
+        AuthenticationResult authenticate(const Message& message) const;
 };

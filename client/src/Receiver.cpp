@@ -18,4 +18,3 @@ void Receiver::receiveLoop() {
 void Receiver::stop() {
     m_running = false;
 }
-
