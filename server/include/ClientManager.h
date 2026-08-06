@@ -6,7 +6,7 @@
 #include <thread>
 
 #include "Client.h"
-// #include "ClientSession.h"
+#include "ClientSession.h"
 
 class ClientManager
 {
@@ -14,7 +14,7 @@ class ClientManager
         std::unordered_map<unsigned int, Client> m_clients; // Map of userId to Client
         std::unordered_map<unsigned int, std::thread> m_threads; // Map of userId to thread handling the client
         std::mutex m_mutex; // Mutex for thread-safe access to m_clients and m_threads
-        // std::unordered_map<unsigned int, ClientSession> m_sessions; // Map of userId to ClientSession for managing client sessions
+        std::unordered_map<unsigned int, ClientSession> m_sessions; // Map of userId to ClientSession for managing client sessions
 
     public:
         ClientManager() = default;
@@ -40,9 +40,9 @@ class ClientManager
 
         // Session management
 
-        // void addSession(unsigned int userId, ClientSession&& session); // Add a session for a client
-        // void removeSession(unsigned int userId); // Remove a session for a client
-        // ClientSession* getSession(unsigned int userId); // Get a session for a client
-        // const ClientSession* getSession(unsigned int userId) const;
+        void addSession(unsigned int userId, ClientSession&& session); // Add a session for a client
+        void removeSession(unsigned int userId); // Remove a session for a client
+        ClientSession* getSession(unsigned int userId); // Get a session for a client
+        const ClientSession* getSession(unsigned int userId) const;
 
 };
