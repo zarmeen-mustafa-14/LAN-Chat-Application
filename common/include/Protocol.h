@@ -9,6 +9,7 @@ namespace Protocol
         LOGIN,
         AUTH_SUCCESS,
         AUTH_FAIL,
+        SYSTEM,   // NEW — for server-generated notices/rejections during normal operation
         CHAT,
         LEAVE,
         PRIVATE

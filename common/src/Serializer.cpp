@@ -11,6 +11,8 @@ std::string Serializer::typeToString(Protocol::MessageType type)
         return "AUTH_SUCCESS";
     case Protocol::MessageType::AUTH_FAIL:
         return "AUTH_FAIL";
+    case Protocol::MessageType::SYSTEM:
+        return "SYSTEM";
     case Protocol::MessageType::CHAT:
         return "CHAT";
     case Protocol::MessageType::LEAVE:

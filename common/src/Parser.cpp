@@ -39,6 +39,8 @@ Protocol::MessageType Parser::stringToType(const std::string &typeStr)
         return Protocol::MessageType::AUTH_SUCCESS;
     if (typeStr == "AUTH_FAIL")
         return Protocol::MessageType::AUTH_FAIL;
+    if (typeStr == "SYSTEM")
+        return Protocol::MessageType::SYSTEM;
     if (typeStr == "CHAT")
         return Protocol::MessageType::CHAT;
     if (typeStr == "LEAVE")
