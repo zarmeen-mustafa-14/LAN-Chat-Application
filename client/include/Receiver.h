@@ -3,8 +3,8 @@
 #include <atomic>
 #include <functional>
 
-#include "server/include/Socket.h"
-#include "common/include/Message.h"
+#include "Socket.h"
+#include "Message.h"
 
 class Receiver {
 private:

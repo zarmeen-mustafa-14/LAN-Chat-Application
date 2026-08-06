@@ -29,6 +29,9 @@ public:
     bool listen(int backlog = SOMAXCONN);
     void close();
 
+    // Used by sender class to prevent direct direct exposure of Sender to Socket class
+    bool send(const std::string& data);
+
     bool isValid() const;
     int getLastError() const;
 };

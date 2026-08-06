@@ -25,5 +25,5 @@ class Authenticator
         Authenticator();
 
         // Authenticate a user based on the provided username and password
-        static AuthenticationResult authenticate(Socket& socket);
+        AuthenticationResult authenticate(Socket& socket);
 };

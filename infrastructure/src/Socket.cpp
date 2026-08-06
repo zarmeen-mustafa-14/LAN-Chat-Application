@@ -64,6 +64,30 @@ void Socket::close()
     }
 }
 
+bool Socket::send(const std::string &data)
+{
+    if (!isValid())
+    {
+        return false;
+    }
+    int totalBytesSent = 0;
+    const int dataSize = static_cast<int>(data.size());
+    while (totalBytesSent < dataSize)
+    {
+        int bytesSent = ::send(m_sock, 
+                                data.c_str() + totalBytesSent, 
+                                dataSize - totalBytesSent, 
+                                0);
+        if (bytesSent == SOCKET_ERROR)
+        {
+            return false; // Sending failed
+        }
+        totalBytesSent += bytesSent;
+    }
+
+    return true;
+}
+
 bool Socket::isValid() const
 {
     return m_sock != INVALID_SOCKET;
