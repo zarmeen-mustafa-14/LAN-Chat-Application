@@ -6,7 +6,7 @@
 class LogSink{
     public:
     // Pure virtual function used for runtime polymorphism later on
-    virtual void write(const std::string message) = 0;
+    virtual void write(const std::string& message) = 0;
 
     // Virtual destructor for safe cleanup
     virtual ~LogSink(){}
