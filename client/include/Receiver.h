@@ -5,6 +5,7 @@
 
 #include "Socket.h"
 #include "Message.h"
+#include "Parser.h"
 
 class Receiver {
 private:
@@ -26,6 +27,4 @@ public:
 
     void receiveLoop(); // Method to start the receiving loop
     void stop(); // Method to stop the receiver
-
-    Message receiveMessage(std::string& message); 
 };
