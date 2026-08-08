@@ -6,6 +6,8 @@ target_sources(Client
         src/Sender.cpp
         src/Receiver.cpp
         src/NetworkClient.cpp
+        src/ClientMessageDispatcher.cpp
+        src/ConsoleUI.cpp
 )
 
 target_include_directories(Client
