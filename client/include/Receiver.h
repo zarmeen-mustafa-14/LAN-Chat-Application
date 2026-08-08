@@ -5,8 +5,6 @@
 
 #include "Socket.h"
 #include "Message.h"
-#include "Parser.h"
-
 class Receiver {
 private:
     Socket& m_socket; 
@@ -25,6 +23,6 @@ public:
     Receiver(const Receiver&) = delete;
     Receiver& operator=(const Receiver&) = delete;
 
-    void receiveLoop(); // Method to start the receiving loop
-    void stop(); // Method to stop the receiver
+    void receiveLoop(); // Method to run the receiving loop
+    void stop(); // Requests the receiving loop to stop
 };

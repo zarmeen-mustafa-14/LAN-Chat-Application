@@ -27,11 +27,17 @@ public:
     bool create();
     bool bind(const std::string& ip, unsigned short port);
     bool listen(int backlog = SOMAXCONN);
-    void close();
+    void shutdown(); // Shutdown the socket for sending and receiving
+    void close(); // Closes the socket and releases resources
 
-    // Used by sender class to prevent direct direct exposure of Sender to Socket class
+    // Sends raw data through the underlying socket
     bool send(const std::string& data);
+
+    // Receives raw data from the underlying socket
     bool receive(std::string& data);
+
+    // Establishes a connection using the underlying socket
+    bool connect(const std::string& ip, unsigned short port);
 
     bool isValid() const;
     int getLastError() const;

@@ -39,9 +39,14 @@ bool Socket::create()
 
 bool Socket::bind(const std::string &ip, unsigned short port)
 {
+    if (!isValid())
+    {
+        return false;
+    }
     sockaddr_in addr{};
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
+    
     if (inet_pton(AF_INET, ip.c_str(), &addr.sin_addr) <= 0)
     {
         return false;
@@ -52,6 +57,10 @@ bool Socket::bind(const std::string &ip, unsigned short port)
 
 bool Socket::listen(int backlog)
 {
+    if (!isValid())
+    {
+        return false;
+    }
     return ::listen(m_sock, backlog) != SOCKET_ERROR;
 }
 
@@ -61,6 +70,14 @@ void Socket::close()
     {
         closesocket(m_sock);
         m_sock = INVALID_SOCKET;
+    }
+}
+
+void Socket::shutdown()
+{
+    if (isValid())
+    {
+        ::shutdown(m_sock, SD_BOTH); // Shutdown both sending and receiving
     }
 }
 
@@ -78,9 +95,9 @@ bool Socket::send(const std::string &data)
                                 data.c_str() + totalBytesSent, 
                                 dataSize - totalBytesSent, 
                                 0);
-        if (bytesSent == SOCKET_ERROR)
+        if (bytesSent <= 0)
         {
-            return false; // Sending failed
+            return false; 
         }
         totalBytesSent += bytesSent;
     }

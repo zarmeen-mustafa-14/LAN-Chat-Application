@@ -5,8 +5,8 @@
 
 #include "Receiver.h"
 #include "Sender.h"
-#include "server/include/Socket.h"
-#include "common/include/Message.h"
+#include "Socket.h"
+#include "Message.h"
 
 enum class ConnectionState {
     DISCONNECTED,
