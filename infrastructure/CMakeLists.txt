@@ -6,6 +6,8 @@ target_sources(Infrastructure
         src/ConsoleLogSink.cpp
         src/Socket.cpp
         src/WinSockInitializer.cpp
+        src/Config.cpp
+        src/ConfigLoader.cpp
 )
 
 target_include_directories(Infrastructure
