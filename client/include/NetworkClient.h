@@ -39,6 +39,6 @@ class NetworkClient {
         void disconnect(); // Method to disconnect from the server
 
         bool sendMessage(const Message& message); // Method to send a message to the server
-
+        void onMessageReceived(const Message& message); // Callback function for handling received messages
         ConnectionState getConnectionState() const; // Method to get the current connection state
 };
