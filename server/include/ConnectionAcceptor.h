@@ -1,7 +1,6 @@
 #pragma once
 
 #include <winsock2.h>
-#include "Client.h"
 #include "Listener.h"
 class ConnectionAcceptor
 {
@@ -10,7 +9,7 @@ private:
 public:
     // Constructor and Destructor
     ConnectionAcceptor(Listener &listener);
-    ~ConnectionAcceptor();
+    ~ConnectionAcceptor() = default;
 
     // Accept a new client connection
     Socket acceptConnection();

@@ -7,6 +7,7 @@ target_sources(Server
         src/MessageDispatcher.cpp
         src/Broadcaster.cpp
         src/Listener.cpp
+        src/ConnectionAcceptor.cpp
 )
 
 target_include_directories(Server
