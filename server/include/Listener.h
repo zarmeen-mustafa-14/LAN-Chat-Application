@@ -11,7 +11,7 @@ private:
 public:
     // Constructor and Destructor
     Listener();
-    ~Listener();
+    ~Listener() = default;
 
     // Prevent copying
     Listener(const Listener &) = delete;
