@@ -2,6 +2,7 @@
 
 #include <string>
 #include <thread>
+#include <functional>
 
 #include "Receiver.h"
 #include "Sender.h"
@@ -17,10 +18,15 @@ enum class ConnectionState {
 
 class NetworkClient {
     private:
+        using MessageCallback = std::function<void(const Message&)>; // Type alias for message callback function
+
+
         Socket m_socket; // Socket for network communication
         
         Sender m_sender; // Sender object to handle outgoing messages
         Receiver m_receiver; // Receiver object to handle incoming messages
+
+        MessageCallback m_messageCallback; // Callback function for handling received messages
 
         std::thread m_receiveThread; // Runs Receiver::receiveLoop()
         ConnectionState m_connectionState; // Variable to track the client's state
@@ -39,6 +45,6 @@ class NetworkClient {
         void disconnect(); // Method to disconnect from the server
 
         bool sendMessage(const Message& message); // Method to send a message to the server
-        void onMessageReceived(const Message& message); // Callback function for handling received messages
+        void setMessageCallback(MessageCallback callback); // Method to set the callback for received messages
         ConnectionState getConnectionState() const; // Method to get the current connection state
 };

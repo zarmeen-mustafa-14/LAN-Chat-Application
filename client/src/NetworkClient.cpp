@@ -4,9 +4,8 @@ NetworkClient::NetworkClient()
     : m_socket(),
       m_sender(m_socket),
       m_receiver(m_socket,
-                 std::bind(&NetworkClient::onMessageReceived,
-                           this,
-                           std::placeholders::_1)),
+                [this](const Message& message) 
+                { onMessageReceived(message); }),
       m_connectionState(ConnectionState::DISCONNECTED)
 {
 }
@@ -80,6 +79,19 @@ bool NetworkClient::sendMessage(const Message &message)
         return false; // Not connected
     }
     return m_sender.sendMessage(message);
+}
+
+void NetworkClient::setMessageCallback(MessageCallback callback)
+{
+    m_messageCallback = callback;
+}
+
+void NetworkClient::onMessageReceived(const Message &message)
+{
+    if (m_messageCallback)
+    {
+        m_messageCallback(message);
+    }
 }
 
 ConnectionState NetworkClient::getConnectionState() const
