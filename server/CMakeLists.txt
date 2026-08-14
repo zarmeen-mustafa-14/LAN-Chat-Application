@@ -9,6 +9,7 @@ target_sources(Server
         src/Listener.cpp
         src/ConnectionAcceptor.cpp
         src/Client.cpp
+        src/ClientManager.cpp
 )
 
 target_include_directories(Server
