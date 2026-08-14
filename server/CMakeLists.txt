@@ -8,6 +8,7 @@ target_sources(Server
         src/Broadcaster.cpp
         src/Listener.cpp
         src/ConnectionAcceptor.cpp
+        src/Client.cpp
 )
 
 target_include_directories(Server
