@@ -14,9 +14,9 @@ public:
     Client(const std::string& ip, unsigned short port, unsigned int userId, const std::string& username);
     ~Client() = default;
 
-    //copy constructor and assignment operator are deleted to prevent copying
-    Client(const Client&) = delete;
-    Client& operator=(const Client&) = delete;
+    // Copy and Move Semantics
+    Client(const Client&) = default;
+    Client& operator=(const Client&) = default;
 
     Client(Client&& other) noexcept; // Move constructor
     Client& operator=(Client&& other) noexcept; // Move assignment operator

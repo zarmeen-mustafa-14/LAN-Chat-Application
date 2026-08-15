@@ -39,7 +39,7 @@ bool Authenticator::verifyPassword(const User& user, const std::string& password
 AuthenticationResult Authenticator::authenticate(const Message& message) const
 {
     const User* user = findUserByUsername(message.getSenderName());
-    user = user ? findUserById(user->userId) : nullptr; // Ensure we have the user by ID as well
+    user = user ? findUserById(user->userId) : nullptr; // Ensure to have the user by ID as well
 
     if (user == nullptr)
     {

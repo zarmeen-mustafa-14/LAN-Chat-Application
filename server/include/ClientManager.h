@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <mutex>
 #include <thread>
+#include <optional>
 
 #include "Client.h"
 #include "ClientSession.h"
@@ -25,14 +26,11 @@ class ClientManager
         void addClient(Client&& client); // Add a new client to the manager
         void removeClient(unsigned int userId); // Remove a client by user ID
 
-        std::vector<const Client*> getAllClients() const; // Get all clients 
-        std::vector<Client*> getAllClients(); // Used for modifying the list of clients in a thread-safe manner
+        std::vector<Client> getAllClients() const; // Get all clients 
+        std::vector<Client> getAllClients(); // Used for modifying the list of clients in a thread-safe manner
 
-        Client* getClientByUsername(const std::string& username);  // Check if a client exists by username
-        Client* getClientById(unsigned int userId); // Check if a client exists by user ID
-
-        const Client* getClientByUsername(const std::string& username) const;  // Check if a client exists by username
-        const Client* getClientById(unsigned int userId) const; // Check if a client exists by user ID
+        std::optional<Client> getClientByUsername(const std::string& username) const;  // Check if a client exists by username
+        std::optional<Client> getClientById(unsigned int userId) const; // Check if a client exists by user ID
 
         // Thread management
         void addThread(unsigned int userId, std::thread&& thread); // Add a thread for a client

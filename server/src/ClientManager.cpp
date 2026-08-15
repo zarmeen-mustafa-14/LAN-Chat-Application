@@ -30,50 +30,39 @@ void ClientManager::removeClient(unsigned int userId)
     }
 }
 
-std::vector<const Client*> ClientManager::getAllClients() const
+std::vector<Client> ClientManager::getAllClients() const
 {
     std::lock_guard<std::mutex> lock(m_mutex);
-    std::vector<const Client*> clients;
+    std::vector<Client> clients;
     for (const auto& [userId, client] : m_clients)
     {
-        clients.push_back(&client);
+        clients.push_back(client);
     }
     return clients;
 }
 
-std::vector<Client*> ClientManager::getAllClients()
+std::optional<Client> ClientManager::getClientByUsername(const std::string& username) const
 {
     std::lock_guard<std::mutex> lock(m_mutex);
-    std::vector<Client*> clients;
-    for (auto& [userId, client] : m_clients)
-    {
-        clients.push_back(&client);
-    }
-    return clients;
-}
-
-Client* ClientManager::getClientByUsername(const std::string& username)
-{
-    std::lock_guard<std::mutex> lock(m_mutex);
-    for (auto& [userId, client] : m_clients)
+    for (const auto& [userId, client] : m_clients)
     {
         if (client.getUsername() == username)
         {
-            return &client;
+            return client;
         }
     }
-    return nullptr;
+    return std::nullopt;
 }
 
-Client* ClientManager::getClientById(unsigned int userId)
+std::optional<Client> ClientManager::getClientById(unsigned int userId) const
 {
     std::lock_guard<std::mutex> lock(m_mutex);
     auto it = m_clients.find(userId);
     if (it != m_clients.end())
     {
-        return &it->second;
+        return it->second;
     }
-    return nullptr;
+    return std::nullopt;
 }
 
 void ClientManager::addThread(unsigned int userId, std::thread&& thread)
