@@ -20,10 +20,14 @@ void ClientManager::addClient(Client&& client)
 
 void ClientManager::removeClient(unsigned int userId)
 {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_clients.erase(userId);
     removeThread(userId);
     removeSession(userId);
+
+    // Prevent deadlock by locking the mutex only for the duration of the erase operation
+    {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_clients.erase(userId);
+    }
 }
 
 std::vector<const Client*> ClientManager::getAllClients() const
@@ -80,15 +84,25 @@ void ClientManager::addThread(unsigned int userId, std::thread&& thread)
 
 void ClientManager::removeThread(unsigned int userId)
 {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    auto it = m_threads.find(userId);
-    if (it != m_threads.end())
+    std::thread threadToJoin;
+
     {
-        if (it->second.joinable())
+        std::lock_guard<std::mutex> lock(m_mutex);
+
+        auto it = m_threads.find(userId);
+
+        if (it == m_threads.end())
         {
-            it->second.join();
+            return;
         }
+
+        threadToJoin = std::move(it->second);
         m_threads.erase(it);
+    }
+
+    if (threadToJoin.joinable())
+    {
+        threadToJoin.join();
     }
 }
 
