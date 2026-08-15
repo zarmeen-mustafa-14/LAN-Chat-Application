@@ -27,8 +27,6 @@ class ClientManager
         void removeClient(unsigned int userId); // Remove a client by user ID
 
         std::vector<Client> getAllClients() const; // Get all clients 
-        std::vector<Client> getAllClients(); // Used for modifying the list of clients in a thread-safe manner
-
         std::optional<Client> getClientByUsername(const std::string& username) const;  // Check if a client exists by username
         std::optional<Client> getClientById(unsigned int userId) const; // Check if a client exists by user ID
 
