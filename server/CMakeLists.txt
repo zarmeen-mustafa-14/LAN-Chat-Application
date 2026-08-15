@@ -10,6 +10,7 @@ target_sources(Server
         src/ConnectionAcceptor.cpp
         src/Client.cpp
         src/ClientManager.cpp
+        src/Authenticator.cpp
 )
 
 target_include_directories(Server

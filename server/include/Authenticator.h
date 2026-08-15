@@ -2,7 +2,6 @@
 
 #include <vector>
 
-#include "Socket.h"
 #include "User.h"
 #include "Message.h"
 
