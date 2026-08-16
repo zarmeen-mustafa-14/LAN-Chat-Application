@@ -11,6 +11,7 @@ target_sources(Server
         src/Client.cpp
         src/ClientManager.cpp
         src/Authenticator.cpp
+        src/Server.cpp
 )
 
 target_include_directories(Server
