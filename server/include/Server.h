@@ -1,4 +1,6 @@
 #pragma once
+#include <thread>
+#include <atomic>
 
 #include "WinSockinitializer.h"
 #include "ClientManager.h"
@@ -14,7 +16,8 @@ class Server {
         ConnectionAcceptor m_connectionAcceptor;
         Authenticator m_authenticator;
         ClientManager m_clientManager;
-        bool m_isRunning;
+        std::atomic<bool> m_isRunning;
+        std::thread m_acceptThread; // Thread for accepting connections
 
         // Private functions
         void acceptConnections();

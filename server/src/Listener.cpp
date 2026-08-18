@@ -11,6 +11,10 @@ Listener &Listener::operator=(Listener &&other) noexcept {
     return *this;
 }
 
+void Listener::stopListening() {
+    m_listenSocket.close();
+}
+
 bool Listener::startListening(const std::string &ip, unsigned short port, int backlog) {
     if (!m_listenSocket.create()) {
         return false;
